@@ -4,121 +4,88 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>News | LiA</title>
-  <meta name="description" content="株式会社LiA — 最新情報">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-  <!-- ── HEADER ── -->
-  <header id="header">
-    <a href="index.html" class="logo">
-      <img src="https://storage.googleapis.com/studio-design-asset-files/projects/7kad3Rbzq3/s-172x72_webp_4dcb5bf2-1855-484c-83a0-c5653c787561.webp" alt="LiA">
-    </a>
-    <nav>
-      <a href="about.html">About us</a>
-      <a href="service.html">Service</a>
-      <a href="message.html">Message</a>
-      <a href="news.html" class="active">News</a>
-      <a href="#" target="_blank">Career <span class="external-icon">↗</span></a>
-      <a href="mailto:info@lia.co.jp" class="nav-contact">Contact</a>
-    </nav>
-  </header>
+<header id="header">
+  <a href="index.html" class="logo">
+    <img src="https://storage.googleapis.com/studio-design-asset-files/projects/7kad3Rbzq3/s-172x72_webp_4dcb5bf2-1855-484c-83a0-c5653c787561.webp" alt="LiA">
+  </a>
+  <nav class="nav-desktop">
+    <a href="about.html">About us</a>
+    <a href="service.html">Service</a>
+    <a href="message.html">Message</a>
+    <a href="news.html" class="active">News</a>
+    <a href="career.html">Career</a>
+    <a href="contact.html" class="nav-contact-btn">Contact</a>
+  </nav>
+  <button class="hamburger" aria-label="メニューを開く"><span></span><span></span><span></span></button>
+</header>
+<nav class="nav-mobile">
+  <a href="about.html">About us</a>
+  <a href="service.html">Service</a>
+  <a href="message.html">Message</a>
+  <a href="news.html">News</a>
+  <a href="career.html">Career</a>
+  <a href="contact.html">Contact</a>
+</nav>
 
-  <!-- ── PAGE HEADER ── -->
-  <div class="page-header">
-    <span class="page-header-en">News</span>
-    <div class="page-header-inner">
-      <div class="breadcrumb">
-        <a href="index.html">Home</a>
-        <span>—</span>
-        <span>News</span>
+<div class="page-header">
+  <span class="page-header-bg-text">News</span>
+  <div class="page-header-inner">
+    <div class="breadcrumb"><a href="index.html">Home</a> <span>—</span> <span>News</span></div>
+    <h1 class="page-header-ja">最新情報</h1>
+  </div>
+</div>
+
+<section class="news-page">
+  <div class="container">
+    <div class="news-filter reveal">
+      <span class="tag" style="cursor:pointer;background:#EEF3FF;border-color:#C7D7FF;">すべて</span>
+      <span class="tag" style="cursor:pointer;background:#fff;border-color:var(--border);color:var(--text-muted);">お知らせ</span>
+      <span class="tag" style="cursor:pointer;background:#fff;border-color:var(--border);color:var(--text-muted);">サービス</span>
+    </div>
+
+    <div class="news-list reveal" data-delay="0.1">
+      <div class="news-row">
+        <span class="news-row-date">2025.10.01</span>
+        <span class="news-row-cat"><span class="tag">サービス</span></span>
+        <span class="news-row-title">求人広告代理店事業を本格スタートしました</span>
+        <span class="news-row-arrow">→</span>
       </div>
-      <h1 class="page-header-ja">最新情報</h1>
+      <div class="news-row">
+        <span class="news-row-date">2025.09.04</span>
+        <span class="news-row-cat"><span class="tag">お知らせ</span></span>
+        <span class="news-row-title">株式会社LiAを設立しました</span>
+        <span class="news-row-arrow">→</span>
+      </div>
+      <div class="news-row">
+        <span class="news-row-date">2024.01.05</span>
+        <span class="news-row-cat"><span class="tag">お知らせ</span></span>
+        <span class="news-row-title">コーポレートサイトをリニューアルしました</span>
+        <span class="news-row-arrow">→</span>
+      </div>
     </div>
   </div>
+</section>
 
-  <!-- ── NEWS LIST ── -->
-  <section class="news-page">
-    <div class="container">
-
-      <!-- Filter tags -->
-      <div class="news-filter reveal">
-        <span class="tag" style="cursor:pointer;background:rgba(67,97,238,0.25);border-color:rgba(67,97,238,0.5);">すべて</span>
-        <span class="tag tag-dark" style="cursor:pointer;">お知らせ</span>
-        <span class="tag tag-dark" style="cursor:pointer;">サービス</span>
-        <span class="tag tag-dark" style="cursor:pointer;">採用</span>
+<footer id="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-brand">
+        <img src="https://storage.googleapis.com/studio-design-asset-files/projects/7kad3Rbzq3/s-172x72_webp_4dcb5bf2-1855-484c-83a0-c5653c787561.webp" alt="LiA">
+        <p class="footer-address">東京都渋谷区渋谷3-6-15 SOLIX SHIBUYA104<br>[営業時間] 12:00〜21:00　[定休日] 土・日・祝</p>
       </div>
-
-      <!-- News items -->
-      <div class="news-list reveal" style="transition-delay:0.1s;">
-
-        <div class="news-item">
-          <span class="news-item-date en">2024.01.05</span>
-          <span class="news-item-cat"><span class="tag">お知らせ</span></span>
-          <span class="news-item-title">コーポレートサイトをリニューアルしました</span>
-          <span class="news-item-arrow">→</span>
-        </div>
-
-        <div class="news-item">
-          <span class="news-item-date en">2025.09.04</span>
-          <span class="news-item-cat"><span class="tag">お知らせ</span></span>
-          <span class="news-item-title">株式会社LiA を設立しました</span>
-          <span class="news-item-arrow">→</span>
-        </div>
-
-        <div class="news-item">
-          <span class="news-item-date en">2025.10.01</span>
-          <span class="news-item-cat"><span class="tag">サービス</span></span>
-          <span class="news-item-title">求人広告代理店事業を本格スタートしました</span>
-          <span class="news-item-arrow">→</span>
-        </div>
-
-      </div>
-
+      <nav class="footer-nav">
+        <div class="footer-nav-group"><h4>Company</h4><ul><li><a href="about.html">About us</a></li><li><a href="message.html">Message</a></li></ul></div>
+        <div class="footer-nav-group"><h4>Service</h4><ul><li><a href="service.html">Service</a></li><li><a href="news.html">News</a></li></ul></div>
+        <div class="footer-nav-group"><h4>Join us</h4><ul><li><a href="career.html">Career</a></li><li><a href="contact.html">Contact</a></li></ul></div>
+      </nav>
     </div>
-  </section>
-
-  <!-- ── FOOTER ── -->
-  <footer id="footer">
-    <div class="footer-inner">
-      <div class="footer-top">
-        <div class="footer-brand">
-          <img src="https://storage.googleapis.com/studio-design-asset-files/projects/7kad3Rbzq3/s-172x72_webp_4dcb5bf2-1855-484c-83a0-c5653c787561.webp" alt="LiA">
-          <p class="footer-address">
-            東京都渋谷区渋谷3-6-15 SOLIX SHIBUYA104<br>
-            [営業時間] 12:00〜21:00 &nbsp;[定休日] 土・日・祝
-          </p>
-        </div>
-        <nav class="footer-nav">
-          <div class="footer-nav-group">
-            <h4>Company</h4>
-            <ul>
-              <li><a href="about.html">About us</a></li>
-              <li><a href="message.html">Message</a></li>
-            </ul>
-          </div>
-          <div class="footer-nav-group">
-            <h4>Service</h4>
-            <ul>
-              <li><a href="service.html">Service</a></li>
-              <li><a href="news.html">News</a></li>
-            </ul>
-          </div>
-          <div class="footer-nav-group">
-            <h4>Join us</h4>
-            <ul>
-              <li><a href="#" target="_blank">Career ↗</a></li>
-              <li><a href="mailto:info@lia.co.jp">Contact</a></li>
-            </ul>
-          </div>
-        </nav>
-      </div>
-      <div class="footer-bottom">
-        <p class="copyright en">&copy; 2025 LiA Inc. All rights reserved.</p>
-      </div>
-    </div>
-  </footer>
-
-  <script src="js/main.js"></script>
+    <div class="footer-bottom"><p class="copyright">&copy; 2025 LiA Inc. All rights reserved.</p></div>
+  </div>
+</footer>
+<script src="js/main.js"></script>
 </body>
 </html>
