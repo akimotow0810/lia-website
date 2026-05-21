@@ -5,7 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>LiA | Life is Adventure</title>
   <meta name="description" content="株式会社LiA — 挑戦する人と企業の可能性を広げる。採用成果にこだわる広告設計・運用支援。">
-  <link rel="stylesheet" href="css/style.css?v=2">
+  <link rel="stylesheet" href="css/style.css?v=3">
 </head>
 <body>
 
@@ -42,30 +42,57 @@
 
 <!-- ── HERO ── -->
 <section id="hero">
-  <div class="hero-content-wrap">
-    <p class="hero-eyebrow">Life is Adventure</p>
-    <h1 class="hero-title">Life is<br>Adventure</h1>
-    <p class="hero-subtitle">人生は挑戦</p>
-    <p class="hero-tagline">挑戦することを楽しみ、夢をかなえる</p>
-    <div class="hero-actions">
-      <a href="about.html" class="btn btn-primary">About LiA</a>
-      <a href="service.html" class="btn btn-outline">Our Service</a>
-    </div>
-    <div class="scroll-hint">
-      <div class="scroll-hint-line"></div>
-      <span style="font-family:'Inter',sans-serif;font-size:10px;letter-spacing:.15em;text-transform:uppercase;color:var(--text-dim);">Scroll</span>
-    </div>
+
+  <!-- 背景画像（動画を使う場合は下のvideoタグを有効にして imgタグを消す） -->
+  <div class="hero-bg" aria-hidden="true">
+    <img class="hero-bg-img"
+         src="https://storage.googleapis.com/studio-design-asset-files/projects/7kad3Rbzq3/s-5200x2925_v-frms_webp_e30ff65c-43ce-48e1-8f8a-70b7c3743ccb_middle.webp"
+         alt="">
+    <!--
+    ── 動画背景：Pexels/Mixkit等からダウンロードした MP4 を video/ フォルダに置いて有効化 ──
+    <video class="hero-bg-vid" autoplay muted loop playsinline>
+      <source src="video/hero.mp4" type="video/mp4">
+    </video>
+    -->
   </div>
-  <div class="hero-images">
-    <div class="hero-img-slot">
-      <img src="https://storage.googleapis.com/studio-design-asset-files/projects/7kad3Rbzq3/s-1058x368_47054aa5-e74d-419e-a1e6-aa0a37af1b13.webp"
-           alt="business">
+  <div class="hero-overlay" aria-hidden="true"></div>
+  <div class="hero-deco-text" aria-hidden="true">ADVENTURE</div>
+
+  <!-- コンテンツ -->
+  <div class="hero-inner">
+
+    <!-- 左：テキスト -->
+    <div class="hero-left">
+      <p class="hero-eyebrow">Life is Adventure</p>
+      <h1 class="hero-title">Life is<br>Adventure</h1>
+      <p class="hero-subtitle">人生は挑戦</p>
+      <p class="hero-tagline">挑戦することを楽しみ、夢をかなえる</p>
+      <div class="hero-actions">
+        <a href="about.html" class="btn btn-white">About LiA</a>
+        <a href="service.html" class="btn btn-ghost-w">Our Service →</a>
+      </div>
     </div>
-    <div class="hero-img-slot">
-      <img src="https://storage.googleapis.com/studio-design-asset-files/projects/7kad3Rbzq3/s-352x466_179f21ae-4ebc-4814-9392-4db36a059959.webp"
-           alt="team">
+
+    <!-- 右：3×3 画像グリッド -->
+    <div class="hero-img-grid" aria-hidden="true">
+      <div class="hero-cell"></div>
+      <div class="hero-cell"></div>
+      <div class="hero-cell"></div>
+      <div class="hero-cell"></div>
+      <div class="hero-cell"></div>
+      <div class="hero-cell"></div>
+      <div class="hero-cell"></div>
+      <div class="hero-cell"></div>
+      <div class="hero-cell"></div>
     </div>
+
   </div>
+
+  <div class="scroll-hint" aria-hidden="true">
+    <div class="scroll-hint-line"></div>
+    <span>Scroll</span>
+  </div>
+
 </section>
 
 <!-- ── NEWS BAR ── -->
@@ -73,9 +100,9 @@
   <div class="newsbar-inner">
     <span class="newsbar-label">News</span>
     <a href="news.html" class="newsbar-item">
-      <span class="newsbar-date">2024.01.05</span>
+      <span class="newsbar-date">2025.10.01</span>
       <span class="newsbar-cat">お知らせ</span>
-      <span class="newsbar-title">コーポレートサイトをリニューアルしました</span>
+      <span class="newsbar-title">求人広告代理店事業を本格スタートしました</span>
     </a>
     <a href="news.html" class="newsbar-more">View all →</a>
   </div>

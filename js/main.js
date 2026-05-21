@@ -120,9 +120,9 @@ document.querySelectorAll('.nav-desktop a, .nav-mobile a').forEach(a => {
     .fromTo('.hero-tagline',      { opacity: 0, y: 14 },    { opacity: 1, y: 0, duration: 0.65 }, '-=0.55')
     .fromTo('.hero-actions .btn', { opacity: 0, y: 22 },    { opacity: 1, y: 0, duration: 0.55, stagger: 0.1 }, '-=0.5')
     .fromTo('.scroll-hint',       { opacity: 0 },           { opacity: 1, duration: 0.5 }, '-=0.2')
-    .fromTo('.hero-images .hero-img-slot',
-      { clipPath: 'inset(0 0 100% 0)', scale: 1.08 },
-      { clipPath: 'inset(0 0 0% 0)', scale: 1, duration: 1.1, stagger: 0.18, ease: 'power4.inOut' }, 0.35
+    .fromTo('.hero-img-grid .hero-cell',
+      { clipPath: 'inset(0 0 100% 0)' },
+      { clipPath: 'inset(0 0 0% 0)', duration: 1.1, stagger: 0.06, ease: 'power4.inOut' }, 0.35
     );
 })();
 
@@ -271,14 +271,15 @@ gsap.utils.toArray('.contact-map-placeholder').forEach(el =>
 
 /* ── 11. Parallax ────────────────────────────────────────────── */
 
-/* Hero images scroll parallax */
-gsap.utils.toArray('.hero-img-slot').forEach((el, i) => {
-  gsap.to(el, {
-    yPercent: -20 * (i + 1),
+/* Hero bg image parallax */
+const heroBgImg = document.querySelector('.hero-bg-img, .hero-bg-vid');
+if (heroBgImg) {
+  gsap.to(heroBgImg, {
+    yPercent: 22,
     ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.8 }
+    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
   });
-});
+}
 
 /* Page header bg text */
 const bgTxt = document.querySelector('.page-header-bg-text');
