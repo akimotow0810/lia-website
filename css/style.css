@@ -131,15 +131,9 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
 .btn-ghost .arrow { transition: transform .25s; }
 .btn-ghost:hover .arrow { transform: translateX(5px); }
 
-/* ── Reveal animation ── */
-.reveal, .reveal-l, .reveal-r {
-  opacity: 0;
-  transition: opacity .7s ease, transform .7s ease;
-}
-.reveal { transform: translateY(28px); }
-.reveal-l { transform: translateX(-28px); }
-.reveal-r { transform: translateX(28px); }
-.reveal.in, .reveal-l.in, .reveal-r.in { opacity: 1; transform: none; }
+/* ── Reveal (GSAP manages these now) ── */
+.reveal, .reveal-l, .reveal-r { /* initial state handled by GSAP */ }
+.reveal.in, .reveal-l.in, .reveal-r.in { /* legacy fallback */ }
 
 /* ===========================
    HEADER
@@ -900,3 +894,137 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
   .hero-actions .btn { width: 100%; justify-content: center; }
   .page-tabs a { padding: 12px 14px; font-size: 12px; }
 }
+
+/* ===========================
+   ANIMATION SYSTEM (GSAP)
+   =========================== */
+
+/* ── Line wrap for hero text clip animation ── */
+.lw { display: block; overflow: hidden; }
+.li { display: block; will-change: transform; }
+
+/* ── Custom Cursor (desktop only) ── */
+.cursor,
+.cursor-ring {
+  position: fixed;
+  top: 0; left: 0;
+  pointer-events: none;
+  z-index: 9999;
+  will-change: transform;
+  border-radius: 50%;
+}
+.cursor {
+  width: 8px; height: 8px;
+  background: var(--accent-mid);
+  z-index: 10000;
+  mix-blend-mode: multiply;
+}
+.cursor-ring {
+  width: 40px; height: 40px;
+  border: 1.5px solid var(--accent);
+  opacity: .45;
+  transition: width .28s cubic-bezier(.4,0,.2,1),
+              height .28s cubic-bezier(.4,0,.2,1),
+              opacity .28s;
+}
+.cursor-ring.expand { width: 64px; height: 64px; opacity: .2; }
+@media (pointer: coarse) { .cursor, .cursor-ring { display: none !important; } }
+
+/* ── Page Transition Overlay ── */
+.page-overlay {
+  position: fixed;
+  inset: 0;
+  background: var(--accent);
+  z-index: 9990;
+  transform: scaleY(0);
+  transform-origin: top;
+  pointer-events: none;
+}
+
+/* ── Marquee ── */
+.marquee-section {
+  overflow: hidden;
+  padding: 18px 0;
+  background: var(--accent);
+  border-top: 1px solid rgba(255,255,255,.08);
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.marquee-track {
+  display: inline-flex;
+  align-items: center;
+  white-space: nowrap;
+  will-change: transform;
+  animation: marquee-scroll 22s linear infinite;
+}
+.marquee-section:hover .marquee-track { animation-play-state: paused; }
+.marquee-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 28px;
+  padding: 0 28px;
+  font-family: var(--font-en);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: .28em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,.38);
+}
+.marquee-item span {
+  display: inline-block;
+  width: 4px; height: 4px;
+  background: rgba(255,255,255,.2);
+  border-radius: 50%;
+}
+@keyframes marquee-scroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+/* ── Image clip-path helper ── */
+.clip-ready {
+  clip-path: inset(0 100% 0 0);
+  overflow: hidden;
+}
+
+/* ── Career Hero (video-ready) ── */
+.career-hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%; height: 100%;
+  object-fit: cover;
+  object-position: center;
+}
+
+/* ── Hover shimmer on cards ── */
+.scard, .why-card, .cs-card {
+  position: relative;
+  overflow: hidden;
+}
+.scard::after, .why-card::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, transparent 40%, rgba(37,99,235,.04) 100%);
+  opacity: 0;
+  transition: opacity var(--tr);
+}
+.scard:hover::after, .why-card:hover::after { opacity: 1; }
+
+/* ── Subtle float animation for hero images ── */
+@keyframes float-a {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-10px); }
+}
+@keyframes float-b {
+  0%, 100% { transform: translateY(-6px); }
+  50%       { transform: translateY(6px); }
+}
+.hero-img-slot:nth-child(1) { animation: float-a 6s ease-in-out infinite; }
+.hero-img-slot:nth-child(2) { animation: float-b 7s ease-in-out infinite 0.8s; }
+
+/* ── Page-enter fade ── */
+@keyframes page-enter {
+  from { opacity: 0; transform: translateY(12px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+body { animation: page-enter .6s ease both; }
