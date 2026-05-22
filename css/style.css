@@ -37,9 +37,10 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
-  /* overflow-x:hidden は body にも html にも設定しない
-     (どちらに置いてもブラウザ実装によって position:fixed が壊れる) */
+  padding-top: 70px; /* fixed ヘッダー分の余白 */
 }
+/* ヒーローページはヘッダーがヒーローに重なるので余白不要 */
+body.has-hero { padding-top: 0; }
 
 a { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
@@ -141,7 +142,7 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
    HEADER
    =========================== */
 #header {
-  position: sticky;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -156,6 +157,42 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
   -webkit-backdrop-filter: blur(12px);
   border-bottom: 1px solid var(--border);
   box-shadow: 0 2px 16px rgba(15,30,80,.06);
+  transition: background .4s ease, border-color .4s ease,
+              box-shadow .4s ease, backdrop-filter .4s ease;
+}
+
+/* ── ヒーローページ: スクロール前は透明 ── */
+.has-hero #header:not(.scrolled) {
+  background: transparent;
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+  border-bottom-color: transparent;
+  box-shadow: none;
+}
+/* ロゴを白く */
+.has-hero #header:not(.scrolled) .logo img {
+  filter: brightness(0) invert(1);
+  transition: filter .4s ease;
+}
+/* ナビリンクを白く */
+.has-hero #header:not(.scrolled) .nav-desktop a {
+  color: rgba(255,255,255,.85);
+}
+.has-hero #header:not(.scrolled) .nav-desktop a:hover {
+  color: #fff;
+}
+/* Contactボタン: 白枠スタイルに */
+.has-hero #header:not(.scrolled) .nav-contact-btn {
+  background: rgba(255,255,255,.15) !important;
+  border: 1px solid rgba(255,255,255,.5) !important;
+  color: #fff !important;
+}
+.has-hero #header:not(.scrolled) .nav-contact-btn:hover {
+  background: rgba(255,255,255,.25) !important;
+}
+/* ハンバーガーを白く */
+.has-hero #header:not(.scrolled) .hamburger span {
+  background: #fff;
 }
 
 .logo img { height: 34px; width: auto; }
@@ -248,8 +285,8 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
    =========================== */
 #hero {
   position: relative;
-  /* sticky ヘッダー(70px)の分を引いてビューポートをちょうど埋める */
-  min-height: calc(100vh - 70px);
+  /* fixed ヘッダーが重なるのでフルビューポートでOK */
+  min-height: 100vh;
   display: flex;
   align-items: center;
   overflow: hidden;
