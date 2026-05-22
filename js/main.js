@@ -95,7 +95,71 @@ document.querySelectorAll('.nav-desktop a, .nav-mobile a').forEach(a => {
   if (h === pagePath || (pagePath === '' && h === 'index.html')) a.classList.add('active');
 });
 
-/* ── 7. Hero entrance (home page) ────────────────────────────── */
+/* ── 7. Hero 9-cell photo grid rotation ─────────────────────── */
+(function () {
+  const cells = document.querySelectorAll('.hero-cell');
+  if (!cells.length) return;
+
+  // Unsplash business/office images (w=480 h=360 for each cell)
+  const pool = [
+    'photo-1497366216548-37526070297c', // modern office
+    'photo-1560472354-b33ff0c44a43',    // business meeting table
+    'photo-1542744173-8e7e53415bb0',    // whiteboard session
+    'photo-1521737604893-d14cc237f11d', // people at desks
+    'photo-1522071820081-009f0129c71c', // team work
+    'photo-1600880292203-757bb62b4baf', // team meeting
+    'photo-1553028826-f4804a6dba3b',    // open office
+    'photo-1507003211169-0a1dd7228f2d', // professional portrait
+    'photo-1573497019940-1c28c88b4f3e', // business woman
+    'photo-1573496359142-b8d87734a5a2', // interview scene
+    'photo-1454165804606-c3d57bc86b40', // laptop analysis
+    'photo-1516321318423-f06f85e504b3', // laptop meeting
+    'photo-1533750349088-cd871a92f312', // team brainstorm
+    'photo-1568992687947-868a62a9f521', // office interior
+    'photo-1497366754035-f200968a7ece', // workspace
+    'photo-1508385082938-fd1ddc4a5b32', // handshake
+    'photo-1551836022-deb4988cc6c0',    // work desk
+    'photo-1527192491265-7e15c55b1ed2', // laptop work
+  ].map(id => `https://images.unsplash.com/${id}?w=480&h=360&fit=crop&q=72&auto=format`);
+
+  // Shuffle pool so adjacent cells start with different images
+  const shuffled = pool.slice().sort(() => Math.random() - 0.5);
+
+  cells.forEach((cell, i) => {
+    // Two img elements per cell for crossfade
+    const imgA = new Image();
+    const imgB = new Image();
+    imgA.src = shuffled[i % shuffled.length];
+    imgB.src = shuffled[(i + cells.length) % shuffled.length];
+
+    const base = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 1.5s ease;';
+    imgA.style.cssText = base;
+    imgB.style.cssText = base + 'opacity:0;';
+    cell.append(imgA, imgB);
+
+    let front = imgA, back = imgB;
+    let idx = (i + cells.length) % shuffled.length;
+
+    function swap() {
+      idx = (idx + 1) % pool.length;
+      back.src = pool[idx];
+      const doSwap = () => {
+        front.style.opacity = '0';
+        back.style.opacity  = '1';
+        [front, back] = [back, front];
+      };
+      if (back.complete && back.naturalWidth) { doSwap(); }
+      else { back.onload = doSwap; }
+    }
+
+    // Stagger start time so cells change at different moments
+    const interval = 3600 + Math.random() * 2400; // 3.6–6s per cell
+    const delay    = i * 380 + Math.random() * 300;
+    setTimeout(() => { swap(); setInterval(swap, interval); }, delay);
+  });
+})();
+
+/* ── 8. Hero entrance (home page) ────────────────────────────── */
 (function () {
   const heroTitle = document.querySelector('.hero-title');
   if (!heroTitle) return;
