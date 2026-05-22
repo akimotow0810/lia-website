@@ -62,12 +62,13 @@ window.addEventListener('scroll', ScrollTrigger.update, { passive: true });
   });
 })();
 
-/* ── 4. Header scroll shadow ─────────────────────────────────── */
+/* ── 4. Header scroll ────────────────────────────────────────── */
 const header = document.getElementById('header');
 if (header) {
-  window.addEventListener('scroll', () => {
-    header.classList.toggle('scrolled', window.scrollY > 40);
-  }, { passive: true });
+  const updateHeader = () =>
+    header.classList.toggle('scrolled', window.scrollY > 60);
+  window.addEventListener('scroll', updateHeader, { passive: true });
+  updateHeader(); // ページ読み込み時も即判定（リロード・戻るボタン対策）
 }
 
 /* ── 5. Hamburger ────────────────────────────────────────────── */
