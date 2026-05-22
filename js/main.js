@@ -100,12 +100,15 @@ document.querySelectorAll('.nav-desktop a, .nav-mobile a').forEach(a => {
   const cells = document.querySelectorAll('.hero-cell');
   if (!cells.length) return;
 
-  // Full-width photos — shown as ONE image split across the 3×3 grid
+  // LiA 公式写真 — 9分割モザイクとして表示
+  const BASE = 'https://storage.googleapis.com/studio-design-asset-files/projects/7kad3Rbzq3/';
   const photos = [
-    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1440&h=960&fit=crop&q=80&auto=format',
-    'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1440&h=960&fit=crop&q=80&auto=format',
-    'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1440&h=960&fit=crop&q=80&auto=format',
-    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1440&h=960&fit=crop&q=80&auto=format',
+    BASE + 's-9113x6835_v-frms_webp_4d63059c-d4e5-4727-9fed-fd07e8875fd5_small.webp',  // チームミーティング
+    BASE + 's-5200x2925_v-frms_webp_e30ff65c-43ce-48e1-8f8a-70b7c3743ccb_middle.webp', // 屋外・キャリア
+    BASE + 's-930x600_v-fs_webp_11c1b105-ece4-479d-8adf-a33bd650e3fc.webp',            // オフィスシーン
+    BASE + 's-1140x600_v-fs_webp_94d5a146-65c0-4f64-8f51-7373955d4bd3.webp',           // ワークシーン
+    BASE + 's-352x466_179f21ae-4ebc-4814-9392-4db36a059959.webp',                      // スタッフ写真①
+    BASE + 's-768x960_69ed0960-71b2-4e91-883b-a0fc0aa52f8f.webp',                      // スタッフ写真②
   ];
 
   // background-position for each cell (col 0/1/2 × row 0/1/2)
@@ -161,7 +164,7 @@ document.querySelectorAll('.nav-desktop a, .nav-mobile a').forEach(a => {
     });
   }
 
-  // Init: paint first photo immediately, then cycle every 4.5 s
+  // Init: paint first photo immediately, then cycle every 5.5 s (6枚)
   preload(photos[0]).then(() => {
     applyPhoto(photos[0], 'front');
 
@@ -169,11 +172,11 @@ document.querySelectorAll('.nav-desktop a, .nav-mobile a').forEach(a => {
     photos.slice(1).forEach(url => preload(url));
 
     setInterval(async () => {
-      photoIdx = (photoIdx + 1) % photos.length;
+      photoIdx = (photoIdx + 1) % photos.length; // 6枚ローテーション
       const url = photos[photoIdx];
       await preload(url);
       transitionTo(url);
-    }, 4500);
+    }, 5500);
   });
 })();
 
