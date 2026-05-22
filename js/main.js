@@ -95,67 +95,85 @@ document.querySelectorAll('.nav-desktop a, .nav-mobile a').forEach(a => {
   if (h === pagePath || (pagePath === '' && h === 'index.html')) a.classList.add('active');
 });
 
-/* ── 7. Hero 9-cell photo grid rotation ─────────────────────── */
+/* ── 7. Hero 9-cell unified photo grid ──────────────────────── */
 (function () {
   const cells = document.querySelectorAll('.hero-cell');
   if (!cells.length) return;
 
-  // Unsplash business/office images (w=480 h=360 for each cell)
-  const pool = [
-    'photo-1497366216548-37526070297c', // modern office
-    'photo-1560472354-b33ff0c44a43',    // business meeting table
-    'photo-1542744173-8e7e53415bb0',    // whiteboard session
-    'photo-1521737604893-d14cc237f11d', // people at desks
-    'photo-1522071820081-009f0129c71c', // team work
-    'photo-1600880292203-757bb62b4baf', // team meeting
-    'photo-1553028826-f4804a6dba3b',    // open office
-    'photo-1507003211169-0a1dd7228f2d', // professional portrait
-    'photo-1573497019940-1c28c88b4f3e', // business woman
-    'photo-1573496359142-b8d87734a5a2', // interview scene
-    'photo-1454165804606-c3d57bc86b40', // laptop analysis
-    'photo-1516321318423-f06f85e504b3', // laptop meeting
-    'photo-1533750349088-cd871a92f312', // team brainstorm
-    'photo-1568992687947-868a62a9f521', // office interior
-    'photo-1497366754035-f200968a7ece', // workspace
-    'photo-1508385082938-fd1ddc4a5b32', // handshake
-    'photo-1551836022-deb4988cc6c0',    // work desk
-    'photo-1527192491265-7e15c55b1ed2', // laptop work
-  ].map(id => `https://images.unsplash.com/${id}?w=480&h=360&fit=crop&q=72&auto=format`);
+  // Full-width photos — shown as ONE image split across the 3×3 grid
+  const photos = [
+    'https://images.unsplash.com/photo-1522202176988-66273c2fd55f?w=1440&h=960&fit=crop&q=80&auto=format',
+    'https://images.unsplash.com/photo-1497366216548-37526070297c?w=1440&h=960&fit=crop&q=80&auto=format',
+    'https://images.unsplash.com/photo-1556761175-b413da4baf72?w=1440&h=960&fit=crop&q=80&auto=format',
+    'https://images.unsplash.com/photo-1521737604893-d14cc237f11d?w=1440&h=960&fit=crop&q=80&auto=format',
+  ];
 
-  // Shuffle pool so adjacent cells start with different images
-  const shuffled = pool.slice().sort(() => Math.random() - 0.5);
+  // background-position for each cell (col 0/1/2 × row 0/1/2)
+  const positions = [
+    '0% 0%',   '50% 0%',   '100% 0%',
+    '0% 50%',  '50% 50%',  '100% 50%',
+    '0% 100%', '50% 100%', '100% 100%',
+  ];
 
+  // Build two .cell-layer divs per cell for crossfade
+  const state = [];
   cells.forEach((cell, i) => {
-    // Two img elements per cell for crossfade
-    const imgA = new Image();
-    const imgB = new Image();
-    imgA.src = shuffled[i % shuffled.length];
-    imgB.src = shuffled[(i + cells.length) % shuffled.length];
+    const a = document.createElement('div');
+    const b = document.createElement('div');
+    a.className = b.className = 'cell-layer';
+    a.style.backgroundPosition = positions[i];
+    b.style.backgroundPosition = positions[i];
+    b.style.opacity = '0';
+    cell.append(a, b);
+    state.push({ front: a, back: b });
+  });
 
-    const base = 'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transition:opacity 1.5s ease;';
-    imgA.style.cssText = base;
-    imgB.style.cssText = base + 'opacity:0;';
-    cell.append(imgA, imgB);
+  let photoIdx = 0;
 
-    let front = imgA, back = imgB;
-    let idx = (i + cells.length) % shuffled.length;
+  // Apply photo URL to all cells' front layers (initial paint)
+  function applyPhoto(url, layer) {
+    state.forEach(s => { s[layer].style.backgroundImage = `url('${url}')`; });
+  }
 
-    function swap() {
-      idx = (idx + 1) % pool.length;
-      back.src = pool[idx];
-      const doSwap = () => {
-        front.style.opacity = '0';
-        back.style.opacity  = '1';
-        [front, back] = [back, front];
-      };
-      if (back.complete && back.naturalWidth) { doSwap(); }
-      else { back.onload = doSwap; }
-    }
+  // Preload an image, resolve when ready
+  function preload(url) {
+    return new Promise(res => {
+      const img = new Image();
+      img.onload = img.onerror = () => res();
+      img.src = url;
+    });
+  }
 
-    // Stagger start time so cells change at different moments
-    const interval = 3600 + Math.random() * 2400; // 3.6–6s per cell
-    const delay    = i * 380 + Math.random() * 300;
-    setTimeout(() => { swap(); setInterval(swap, interval); }, delay);
+  // Transition all 9 cells to a new photo in random cell order,
+  // staggered across ~2 s, each cell crossfading over 1.4 s
+  function transitionTo(url) {
+    const order = Array.from({ length: 9 }, (_, i) => i).sort(() => Math.random() - 0.5);
+    const WINDOW = 2000; // ms total stagger window
+    order.forEach((ci, rank) => {
+      setTimeout(() => {
+        const s = state[ci];
+        s.back.style.backgroundImage = `url('${url}')`;
+        s.back.style.opacity = '1';
+        s.front.style.opacity = '0';
+        // Swap references so next cycle works correctly
+        setTimeout(() => { [s.front, s.back] = [s.back, s.front]; }, 1500);
+      }, rank * (WINDOW / 8));
+    });
+  }
+
+  // Init: paint first photo immediately, then cycle every 4.5 s
+  preload(photos[0]).then(() => {
+    applyPhoto(photos[0], 'front');
+
+    // Preload remaining photos
+    photos.slice(1).forEach(url => preload(url));
+
+    setInterval(async () => {
+      photoIdx = (photoIdx + 1) % photos.length;
+      const url = photos[photoIdx];
+      await preload(url);
+      transitionTo(url);
+    }, 4500);
   });
 })();
 
