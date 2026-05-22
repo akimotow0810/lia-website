@@ -250,7 +250,7 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
   background: #06101f;
 }
 
-/* ── Photo background with Ken Burns zoom ── */
+/* ── Video background ── */
 .hero-bg {
   position: absolute;
   inset: 0;
@@ -259,40 +259,26 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
   background: #06101f;
 }
 .hero-bg-img {
+  display: none;
+}
+.hero-bg-vid {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 30%;
+  object-position: center center;
   display: block;
-  transform-origin: center center;
-  animation: kenBurns 24s ease-in-out infinite alternate;
-  will-change: transform;
-}
-@keyframes kenBurns {
-  0%   { transform: scale(1)    translate(0%,  0%); }
-  100% { transform: scale(1.10) translate(-2%, -1%); }
 }
 
-/* ── 動画ファイルを使う場合（video/hero.mp4 を配置してこちらを有効化） ── */
-.hero-bg-vid {
-  position: absolute;
-  inset: 0;
-  width: 100%; height: 100%;
-  object-fit: cover;
-  object-position: center;
-  display: none; /* 動画使用時は none → block */
-}
-
-/* ── Gradient overlay (photo readability) ── */
+/* ── Gradient overlay (video readability) ── */
 .hero-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(to right,  rgba(6,15,30,.82) 0%, rgba(6,15,30,.55) 55%, rgba(6,15,30,.30) 100%),
-    linear-gradient(to bottom, rgba(6,15,30,.50) 0%, transparent 40%,  rgba(6,15,30,.45) 100%);
+    linear-gradient(to right,  rgba(4,10,24,.78) 0%, rgba(4,10,24,.45) 60%, rgba(4,10,24,.18) 100%),
+    linear-gradient(to bottom, rgba(4,10,24,.40) 0%, transparent 50%,  rgba(4,10,24,.55) 100%);
 }
 
 /* ── Large decorative background text ── */
