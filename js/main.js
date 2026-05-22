@@ -6,7 +6,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 /* ── 1. Lenis smooth scroll ──────────────────────────────────── */
-const lenis = new Lenis({ lerp: 0.12, smoothWheel: true, wheelMultiplier: 1.0 });
+const lenis = new Lenis({ smoothWheel: false, smoothTouch: false });
 gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 lenis.on('scroll', ScrollTrigger.update);
@@ -267,15 +267,7 @@ gsap.utils.toArray('.contact-map-placeholder').forEach(el =>
 
 /* ── 11. Parallax ────────────────────────────────────────────── */
 
-/* Hero bg image parallax */
-const heroBgImg = document.querySelector('.hero-bg-img, .hero-bg-vid');
-if (heroBgImg) {
-  gsap.to(heroBgImg, {
-    yPercent: 22,
-    ease: 'none',
-    scrollTrigger: { trigger: '#hero', start: 'top top', end: 'bottom top', scrub: 1.5 }
-  });
-}
+/* Hero bg: Ken Burns CSS animation handles visual motion — no JS parallax needed */
 
 /* Page header bg text */
 const bgTxt = document.querySelector('.page-header-bg-text');
