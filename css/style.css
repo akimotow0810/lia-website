@@ -29,14 +29,14 @@
   --font-jp: 'Noto Sans JP', sans-serif;
 }
 
-html { scroll-behavior: smooth; }
+/* overflow-x は html に置く → body に置くと position:fixed が壊れる */
+html { scroll-behavior: smooth; overflow-x: hidden; }
 
 body {
   font-family: var(--font-jp);
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
-  overflow-x: hidden;
 }
 
 a { text-decoration: none; color: inherit; }
