@@ -6,7 +6,7 @@
 gsap.registerPlugin(ScrollTrigger);
 
 /* ── 1. Lenis smooth scroll ──────────────────────────────────── */
-const lenis = new Lenis({ lerp: 0.075, smoothWheel: true });
+const lenis = new Lenis({ lerp: 0.12, smoothWheel: true, wheelMultiplier: 1.0 });
 gsap.ticker.add((time) => lenis.raf(time * 1000));
 gsap.ticker.lagSmoothing(0);
 lenis.on('scroll', ScrollTrigger.update);
@@ -120,10 +120,6 @@ document.querySelectorAll('.nav-desktop a, .nav-mobile a').forEach(a => {
     .fromTo('.hero-tagline',      { opacity: 0, y: 14 },    { opacity: 1, y: 0, duration: 0.65 }, '-=0.55')
     .fromTo('.hero-actions .btn', { opacity: 0, y: 22 },    { opacity: 1, y: 0, duration: 0.55, stagger: 0.1 }, '-=0.5')
     .fromTo('.scroll-hint',       { opacity: 0 },           { opacity: 1, duration: 0.5 }, '-=0.2')
-    .fromTo('.hero-img-grid .hero-cell',
-      { clipPath: 'inset(0 0 100% 0)' },
-      { clipPath: 'inset(0 0 0% 0)', duration: 1.1, stagger: 0.06, ease: 'power4.inOut' }, 0.35
-    );
 })();
 
 /* ── 8. Page-header sub-pages ───────────────────────────────── */
