@@ -37,10 +37,8 @@ body {
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
-  padding-top: 70px; /* fixed ヘッダー分の余白 */
+  /* sticky ヘッダーはフロー内に存在するため padding-top 不要 */
 }
-/* ヒーローページはヘッダーがヒーローに重なるので余白不要 */
-body.has-hero { padding-top: 0; }
 
 a { text-decoration: none; color: inherit; }
 img { display: block; max-width: 100%; }
@@ -142,10 +140,8 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
    HEADER
    =========================== */
 #header {
-  position: fixed;
+  position: sticky;
   top: 0;
-  left: 0;
-  right: 0;
   z-index: 1000;
   padding: 0 48px;
   height: 70px;
@@ -285,7 +281,8 @@ h1,h2,h3,h4 { font-family: var(--font-jp); line-height: 1.3; }
    =========================== */
 #hero {
   position: relative;
-  /* fixed ヘッダーが重なるのでフルビューポートでOK */
+  /* sticky ヘッダーの裏側に重なるよう -70px 引き上げる */
+  margin-top: -70px;
   min-height: 100vh;
   display: flex;
   align-items: center;
