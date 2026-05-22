@@ -29,14 +29,16 @@
   --font-jp: 'Noto Sans JP', sans-serif;
 }
 
-/* overflow-x は html に置く → body に置くと position:fixed が壊れる */
-html { scroll-behavior: smooth; overflow-x: hidden; }
+/* html/body に overflow を一切置かない → position:fixed を確実に保護 */
+html { scroll-behavior: smooth; }
 
 body {
   font-family: var(--font-jp);
   background: var(--bg);
   color: var(--text);
   line-height: 1.7;
+  /* overflow-x:hidden は body にも html にも設定しない
+     (どちらに置いてもブラウザ実装によって position:fixed が壊れる) */
 }
 
 a { text-decoration: none; color: inherit; }
